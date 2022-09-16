@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app>
+    <v-main>
+      <NavHeader :info="login"/>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavHeader from './components/commons/NavHeader.vue';
+
 
 export default {
   name: 'App',
+
   components: {
-    HelloWorld
+    NavHeader,
+  },
+
+  data() {
+    return {
+      login: null
+    }
+  },
+
+  mounted() {
+    this.login = sessionStorage.getItem('login')
+    console.log('Login aqui', this.login)
+
+    if (this.login == null) {
+      this.$router.push('/')
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
